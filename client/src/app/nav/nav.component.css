@@ -1,0 +1,17 @@
+.navbar-custom { 
+    background-color: #78b1eb; 
+}
+
+.dropdown-toggle, .dropdown-item {
+    cursor: pointer;
+}
+
+.form-control {
+    height: 32px;
+    width: 150px;
+}
+
+.btn {
+    padding-top: 1%;
+}
+

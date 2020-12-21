@@ -1,1 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
+.bs-datepicker-body table td.week span 
+{
+  color: #78b1eb !important; 
+}
+
+.bs-datepicker-body table td span.selected,
+.bs-datepicker-head,
+.bs-datepicker-head, .bs-datepicker button:active,
+.bs-datepicker-body table td.selected span,
+.bs-datepicker-body table td span[class*="select-"]:after,
+.bs-datepicker-body table td[class*="select-"] span:after,
+.bs-datepicker-body table td.active-week span:hover 
+{
+  background-color: #78b1eb !important; 
+}
+
+.btn-primary
+{
+  background-color : #78b1eb;
+  border: #78b1eb;
+}
+
+.btn-primary:hover
+{
+  background-color : #3e98f1;
+}
+
+.btn-primary:focus:active:hover
+{
+  background-color : #78b1eb;
+  border: #78b1eb;
+}
+
+.btn-info
+{
+  background-color : #9cbbda;
+  border: #9cbbda;
+}
+
+.btn-info:hover
+{
+  background-color : #68aef5;
+}
+
+.btn-info:focus:active:hover
+{
+  background-color : #68aef5;
+}
+
+.btn-info.dropdown-toggle
+{
+  background-color: #9cbbda;
+}
