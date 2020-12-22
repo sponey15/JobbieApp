@@ -12,4 +12,7 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  category(categoryName: any) {
+    console.log(categoryName);
+  }
 }

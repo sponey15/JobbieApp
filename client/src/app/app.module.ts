@@ -14,6 +14,7 @@ import { MainComponent } from './main/main.component';
 import { AccountService } from './_services/account.service';
 import { ToastrModule } from 'ngx-toastr';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { HasRoleDirective } from './_directives/has-role.directive';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     HomeComponent,
     RegisterComponent,
     NavComponent,
-    MainComponent
+    MainComponent,
+    HasRoleDirective
   ],
   imports: [
     BrowserModule,

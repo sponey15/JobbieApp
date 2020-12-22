@@ -1,0 +1,14 @@
+.image:hover {
+    cursor: pointer;
+}
+.inner {
+    text-align: center;
+    color: #78b1eb;
+}
+.leftclass {
+    margin-left: 14px;
+}
+.name {
+    font-size: 18px;
+    color: #78b1eb;
+}
