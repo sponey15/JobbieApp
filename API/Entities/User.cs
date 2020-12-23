@@ -14,5 +14,6 @@ namespace API.Entities
         public DateTime BirthDate { get; set; }
         public string Description { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<Photo> Photos { get; set; }
     }
 }

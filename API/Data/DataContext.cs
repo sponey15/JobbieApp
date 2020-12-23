@@ -1,7 +1,9 @@
+using System;
 using API.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using static API.Entities.Offer;
 
 namespace API.Data
 {
@@ -10,6 +12,8 @@ namespace API.Data
         IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
         public DataContext(DbContextOptions options) : base(options){}
+        public DbSet<Offer> Offers { get; set; }
+        public DbSet<Photo> Photo { get; set; }
         
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -26,6 +30,12 @@ namespace API.Data
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
+            
+            builder.Entity<Offer>()
+                .Property(e => e.OfferCategoryName)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (OfferCategory)Enum.Parse(typeof(OfferCategory), v));
         }
     }
 }

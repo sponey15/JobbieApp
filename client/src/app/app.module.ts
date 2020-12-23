@@ -15,6 +15,8 @@ import { AccountService } from './_services/account.service';
 import { ToastrModule } from 'ngx-toastr';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { HasRoleDirective } from './_directives/has-role.directive';
+import { OffersComponent } from './company/offers/offers.component';
+import { OfferNewComponent } from './company/offer-new/offer-new.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { HasRoleDirective } from './_directives/has-role.directive';
     RegisterComponent,
     NavComponent,
     MainComponent,
-    HasRoleDirective
+    HasRoleDirective,
+    OffersComponent,
+    OfferNewComponent
   ],
   imports: [
     BrowserModule,

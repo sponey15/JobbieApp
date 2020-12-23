@@ -8,16 +8,13 @@
                     <a class="nav-link" routerLink='/main' routerLinkActive='active'>Main page</a>
                 </li>
                 <li *appHasRole='["Company"]' class="nav-item">
-                    <a class="nav-link" routerLink='/' routerLinkActive='active'>New offer</a>
+                    <a class="nav-link" routerLink='/offer-new' routerLinkActive='active'>Offers</a>
                 </li>
                 <li *appHasRole='["Company"]' class="nav-item">
-                    <a class="nav-link" routerLink='/'routerLinkActive='active'>My offers</a>
+                    <a class="nav-link" routerLink='/' routerLinkActive='active'>Current jobs</a>
                 </li>
                 <li *appHasRole='["Company"]' class="nav-item">
-                    <a class="nav-link" routerLink='/' routerLinkActive='active'>Calendar</a>
-                </li>
-                <li *appHasRole='["Company"]' class="nav-item">
-                    <a class="nav-link" routerLink='/'routerLinkActive='active'>Current jobs</a>
+                    <a class="nav-link" routerLink='/'routerLinkActive='active'>Calendar</a>
                 </li>
                 
                 <li *appHasRole='["User"]' class="nav-item">
