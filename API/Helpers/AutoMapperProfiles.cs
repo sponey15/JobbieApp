@@ -9,6 +9,9 @@ namespace API.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<RegisterDto, User>();
+            CreateMap<OfferToAddDto, Offer>();
+            CreateMap<OfferCategoryDto, Offer>();
+            CreateMap<PhotoDto, Photo>().ReverseMap();
         }
     }
 }

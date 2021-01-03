@@ -1,1 +1,74 @@
-<p>offer-new works!</p>
+<div *appHasRole='["Company"]'>
+<div *ngIf="!addPhotoMode" class="container">
+    <div class="row">
+        <div class="col text-center">
+            <label for="title" class="labelbig">New offer</label>
+        </div>
+    </div>
+    <div class="row mt-2 mb-5">
+        <div class="col-sm-6">
+            <label for="title" class="label">Step 1: Add offer informations</label>
+        </div>
+        <div class="col-sm-6">
+            <label for="title" class="labelDisabled">Step 2: Add photos to your offer</label>
+        </div>
+    </div>
+    <div class="row mt-8">
+        <div class="col-sm-8">
+            <label for="title" class="label">Offer title</label>
+            <input type="text" name="title" id="" class="form-control" [(ngModel)]="title">
+        </div>
+        <div class="col-sm-4">
+            <label for="selectedCategory" class="label">Category</label>
+            <select [(ngModel)]="selectedCategory" class="form-control"  name='selectedCategory'>
+                <option *ngFor="let o of options">
+                    {{o.offerCategoryName}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <label for="title" class="label">Price in PLN</label>
+            <input type="number" name="price" id="" class="form-control" [(ngModel)]="price">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm">
+        <label for="Description" class="label">Description</label>
+        <textarea 
+            cols="30" 
+            rows="15"
+            class="form-control"
+            style="background-color: white;"
+            [(ngModel)]="description"></textarea>
+        </div>
+    </div>
+    <div class="row mt-4 mb-4">
+        <div class="col-md-12 text-right">
+            <button  class="btn btn-info" (click)="addOffer()">Add photos to offer</button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="addPhotoMode" class="container">
+    <div class="row">
+        <div class="col text-center">
+            <label for="title" class="labelbig">New offer</label>
+        </div>
+    </div>
+    <div class="row mt-2 mb-5">
+        <div class="col-sm-6">
+            <label for="title" class="labelDisabled">Step 1: Add offer informations</label>
+        </div>
+        <div class="col-sm-6">
+            <label for="title" class="label">Step 2: Add photos to your offer</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <app-photo-editor [offer]="offer"></app-photo-editor>
+        </div>
+    </div>
+</div>
+</div>

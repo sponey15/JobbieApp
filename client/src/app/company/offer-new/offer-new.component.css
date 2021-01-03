@@ -1,0 +1,16 @@
+.container {
+    width: 70%;
+}
+.label {
+    color: #78b1eb;
+    font-size: 18pt;
+}
+.labelbig {
+    color: #78b1eb;
+    font-size: 24pt;
+    font-weight: bold;
+}
+.labelDisabled {
+    color: #afbbc7;
+    font-size: 18pt;
+}

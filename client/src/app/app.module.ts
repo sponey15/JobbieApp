@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -17,6 +17,11 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { HasRoleDirective } from './_directives/has-role.directive';
 import { OffersComponent } from './company/offers/offers.component';
 import { OfferNewComponent } from './company/offer-new/offer-new.component';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { FileUploadModule } from 'ng2-file-upload';
+import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { OfferEditComponent } from './company/offer-edit/offer-edit.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +32,9 @@ import { OfferNewComponent } from './company/offer-new/offer-new.component';
     MainComponent,
     HasRoleDirective,
     OffersComponent,
-    OfferNewComponent
+    OfferNewComponent,
+    PhotoEditorComponent,
+    OfferEditComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +43,8 @@ import { OfferNewComponent } from './company/offer-new/offer-new.component';
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    NgxGalleryModule,
+    FileUploadModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
     ToastrModule.forRoot({
@@ -43,7 +52,8 @@ import { OfferNewComponent } from './company/offer-new/offer-new.component';
     })
   ],
   providers: [
-    AccountService
+    AccountService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

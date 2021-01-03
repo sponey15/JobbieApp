@@ -1,1 +1,68 @@
-<p>offers works!</p>
+<div class="container">
+    <div class="row mt-2 mb-5">
+        <div class="col text-center">
+            <label for="title" class="labelbig">Offers</label>
+        </div>
+    </div>
+    <div class="row mt-2 mb-5">
+        <div class="col-2"></div>
+        <div class="col-4">
+            <button style="margin-left: 32px;" class="btn btn-info" routerLink='/offer-new' routerLinkActive='active'>Add new offer</button>
+        </div>
+        <div class="col-2">
+        <label style="margin-top: 5px; margin-left: 110px;" for="selectedCategory" class="label">Category</label>   
+        </div>
+        <div class="col-2">
+            <select class="form-control selectField" [(ngModel)]="selectedCategory" name='selectedCategory' (change)="getCompanyOffersFromCategory()">
+                <option *ngFor="let o of options">
+                    {{o.offerCategoryName}}
+                </option>
+            </select>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <table class="table table-striped ">
+                <thead>
+                    <tr>
+                        <th class="col-3">
+                            <div style="margin-left: 32px;">
+                                Offer Title
+                            </div>
+                        </th>
+                        <th class="col-3"></th>
+                        <th class="col-6"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let offer of offers">
+                        <td>
+                            <div style="margin-top: 32px;  margin-left: 32px;">
+                                {{offer.title}}
+                            </div>
+                        </td>
+                        <td>
+                            <button style="margin-top: 32px;" class="btn btn-info" routerLink='/offer-edit/{{offer.id}}' routerLinkActive='active'>Edit offer</button>
+                        </td>
+                        <td  style="text-align: center;" >
+                            
+                                <img *ngIf="offer.photos.length == 0"
+                                    src="{{'./assets/icons/offer.png'}}" alt="photo" 
+                                    class="card-img">
+                                <div *ngFor="let photo of offer.photos">
+                                    <img *ngIf="photo.isMain == true"
+                                    src="{{photo.url || './assets/icons/offer.png'}}" alt="photo" 
+                                    class="card-img img-thumbnail">
+                                </div>
+                            
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>
