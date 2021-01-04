@@ -50,6 +50,54 @@ namespace API.Controllers
             return BadRequest("Adding offer didn't succeed");
         }
 
+        [HttpPut("updateOffer/{offerId}")]
+        public async Task<ActionResult<Offer>> UptateOffer(int offerId, OfferToAddDto offerToAddDto)
+        {
+            var companyId = User.GetUserId();
+            var company = await _unitOfWork.UserRepository.GetUserByIdAsync(companyId);
+            var offerToUpdate = await _unitOfWork.OfferRepository.GetOfferByIdAsync(offerId);
+
+            if (offerToUpdate.CompanyName != company.UserName)
+                return Unauthorized("You are not the creator of the offer");
+
+            var offer = _mapper.Map(offerToAddDto, offerToUpdate);
+            offer.CompanyName = company.UserName;
+
+            //_unitOfWork.OfferRepository.Update(offer);
+
+            if (await _unitOfWork.SaveAll())
+            {
+                return Ok(offer);
+            }
+
+            return BadRequest("Updating offer didn't succeed");
+        }
+
+        [HttpDelete("deleteOffer/{offerId}")]
+        public async Task<ActionResult> DeleteOffer(int offerId)
+        {
+            var companyId = User.GetUserId();
+            var company = await _unitOfWork.UserRepository.GetUserByIdAsync(companyId);
+            var offerToDelete = await _unitOfWork.OfferRepository.GetOfferByIdAsync(offerId);
+
+            if (offerToDelete.CompanyName != company.UserName)
+                return Unauthorized("You are not the creator of the offer");
+            
+            foreach (var photo in offerToDelete.Photos)
+            {
+                await DeleteOfferPhoto(offerId, photo.Id);
+            }
+
+            _unitOfWork.OfferRepository.Delete(offerToDelete);
+
+            if (await _unitOfWork.SaveAll())
+            {
+                return Ok();
+            }
+
+            return BadRequest("Deleting offer didn't succeed");
+        }
+
         //all offers from company
         [HttpGet("getOffer/{offerId}")]
         public async Task<ActionResult<Offer>> GetOffer(int offerId)
@@ -138,7 +186,7 @@ namespace API.Controllers
 
             if (photo == null) return NotFound();
 
-            if (photo.IsMain) return BadRequest("You cannot delete your main photo");
+            //if (photo.IsMain) return BadRequest("You cannot delete your main photo");
 
             if (photo.PublicId != null)
             {

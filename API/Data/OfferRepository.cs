@@ -29,6 +29,11 @@ namespace API.Data
             _context.Offers.Remove(offer);
         }
 
+        public void Update(Offer offer)
+        {
+            _context.Offers.Update(offer);
+        }
+
         public async Task<Offer> GetOfferByIdAsync(int offerId)
         {
             return await _context.Offers
@@ -60,6 +65,16 @@ namespace API.Data
 
             return await _context.Offers
                 .Where(x => x.OfferCategoryName == offerCategory.OfferCategoryName && x.CompanyName == companyName)
+                .Include(p => p.Photos)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Offer>> GetOffersFromCategory(OfferCategoryDto offerCategoryDto)
+        {
+            var offerCategory = _mapper.Map<Offer>(offerCategoryDto);
+
+            return await _context.Offers
+                .Where(x => x.OfferCategoryName == offerCategory.OfferCategoryName)
                 .Include(p => p.Photos)
                 .ToListAsync();
         }

@@ -1,1 +1,75 @@
-<p>offer-edit works!</p>
+<div class="col-2"></div>
+<div class="container col-8" *ngIf="offer">
+<div class="row">
+    <div class="col text-center">
+        <label for="title" class="labelbig">Edit offer</label>
+    </div>
+</div>
+<div class="row mt-8">
+    <div class="col-sm-8">
+        <label for="title" class="label">Offer title</label>
+        <input type="text" name="title" id="" class="form-control" [(ngModel)]="offer.title">
+    </div>
+    <div class="col-sm-4">
+        <label for="selectedCategory" class="label">Category</label>
+        <select [(ngModel)]="offer.offerCategoryName" class="form-control"  name='selectedCategory'>
+            <option *ngFor="let o of options">
+                {{o.offerCategoryName}}
+            </option>
+        </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <label for="title" class="label">Price in PLN</label>
+        <input type="number" name="price" id="" class="form-control" [(ngModel)]="offer.price">
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm">
+    <label for="Description" class="label">Description</label>
+    <textarea 
+        cols="30" 
+        rows="10"
+        class="form-control"
+        style="background-color: white;"
+        [(ngModel)]="offer.description"></textarea>
+    </div>
+</div>
+
+
+<div class="row mt-4">
+    <div *ngIf="offer?.photos.length == 0">
+        Your offer doesnt have any photos yet
+    </div>
+    <div class="col-2 mb-2" *ngFor="let photo of offer?.photos">
+        <img src="{{photo.url}}" alt="{{photo.url}}" class="img-thumbnail p-1">
+        <div class="text-center">
+            <button 
+                [disabled]="photo.isMain"
+                (click)="setMainPhoto(offer.id, photo)"
+                [ngClass]='photo.isMain ? "btn-success active" : "btn-outline-success"'
+                class="btn btn-sm mr-2 mt-2"
+            >Main</button>
+            <button 
+                [disabled]="photo.isMain"
+                (click)="deletePhoto(offer.id, photo.id)"
+                class="btn btn-sm btn-danger mt-2 "
+            ><i class="fa fa-trash"></i></button>
+        </div>
+    </div>
+    <button  class="btn btn-info ml-3 mb-5 btnPhoto" (click)="addPhotos()">Add photos to offer</button>
+    
+    <div *ngIf="addPhotoMode" class="container">
+        <div class="col-sm-12">
+            <app-photo-editor [offer]="offer"></app-photo-editor>
+        </div>
+    </div>
+</div>
+<div class="row mt-4 mb-4">
+    <div class="col-md-12 text-right">
+        <button  class="btn btn-danger mr-2" (click)="deleteOffer(offer.id)">Delete offer</button>
+        <button  class="btn btn-success" (click)="editOffer(offer.id)">Save offer</button>
+    </div>
+</div>
+</div>

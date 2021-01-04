@@ -63,27 +63,27 @@ export class PhotoEditorComponent implements OnInit {
     };
   }
 
-  deletePhoto(offerId: number, photoId: number) {
-    this.companyService.deleteOfferPhoto(offerId, photoId).subscribe(() => {
-      this.offer.photos = this.offer.photos.filter(x => x.id !== photoId);
-    });
-  }
+  // deletePhoto(offerId: number, photoId: number) {
+  //   this.companyService.deleteOfferPhoto(offerId, photoId).subscribe(() => {
+  //     this.offer.photos = this.offer.photos.filter(x => x.id !== photoId);
+  //   });
+  // }
 
   fileOverBase(e: any) {
     this.hasBaseDropzoneOver = e;
   }
 
-  setMainPhoto(offerId: number, photo: Photo) {
-    this.companyService.setOfferMainPhoto(offerId, photo.id).subscribe(() => {
-      // this.user.photoUrl = photo.url;
-      // this.accountService.setCurrentUser(this.user);
-      this.offer.photoUrl = photo.url;
-      this.offer.photos.forEach(p => {
-        // tslint:disable-next-line: curly
-        if (p.isMain) p.isMain = false;
-        // tslint:disable-next-line: curly
-        if (p.id === photo.id) p.isMain = true;
-      });
-    });
-  }
+  // setMainPhoto(offerId: number, photo: Photo) {
+  //   this.companyService.setOfferMainPhoto(offerId, photo.id).subscribe(() => {
+  //     // this.user.photoUrl = photo.url;
+  //     // this.accountService.setCurrentUser(this.user);
+  //     this.offer.photoUrl = photo.url;
+  //     this.offer.photos.forEach(p => {
+  //       // tslint:disable-next-line: curly
+  //       if (p.isMain) p.isMain = false;
+  //       // tslint:disable-next-line: curly
+  //       if (p.id === photo.id) p.isMain = true;
+  //     });
+  //   });
+  // }
 }

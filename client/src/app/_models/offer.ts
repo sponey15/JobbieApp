@@ -14,3 +14,15 @@ export interface Offer {
 export interface OfferCategory {
     [offerCategoryName: string]: string;
 }
+
+export enum OfferCategoryType {
+    Renovation,
+    Painting,
+    Transport,
+    Electrician,
+    Assembly,
+    Electronics,
+    Plumber,
+    Cleaning,
+    Handyman
+}

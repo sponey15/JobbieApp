@@ -24,7 +24,7 @@ export class OffersComponent implements OnInit {
     { offerCategoryName: "Electronics", value: "Electronics" },
     { offerCategoryName: "Plumber", value: "Plumber" },
     { offerCategoryName: "Cleaning", value: "Cleaning" },
-    { offerCategoryName: "Handyman", value: "Handyman" }
+    { offerCategoryName: "Handyman", value: "Handyman" },
   ];
 
   constructor(private accountService: AccountService, private companyService: CompanyService) {

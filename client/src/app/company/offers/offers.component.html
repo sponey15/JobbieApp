@@ -47,16 +47,17 @@
                             <button style="margin-top: 32px;" class="btn btn-info" routerLink='/offer-edit/{{offer.id}}' routerLinkActive='active'>Edit offer</button>
                         </td>
                         <td  style="text-align: center;" >
-                            
-                                <img *ngIf="offer.photos.length == 0"
-                                    src="{{'./assets/icons/offer.png'}}" alt="photo" 
-                                    class="card-img">
-                                <div *ngFor="let photo of offer.photos">
-                                    <img *ngIf="photo.isMain == true"
-                                    src="{{photo.url || './assets/icons/offer.png'}}" alt="photo" 
-                                    class="card-img img-thumbnail">
+                                <div *ngIf="offer.photos == 0">
+                                    <img src="{{'./assets/icons/offer.png'}}" alt="photo" 
+                                        class="card-img img-thumbnail">
                                 </div>
-                            
+                                <div *ngIf="offer.photos.length != 0">
+                                    <div *ngFor="let photo of offer.photos">
+                                        <img *ngIf="photo.isMain == true"
+                                        src="{{photo.url || './assets/icons/offer.png'}}" alt="photo" 
+                                        class="card-img img-thumbnail">
+                                    </div>
+                                </div>
                         </td>
                         
                     </tr>

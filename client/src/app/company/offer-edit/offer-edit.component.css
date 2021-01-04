@@ -1,0 +1,14 @@
+.photosClass {
+    margin-left: 10%;
+}
+.btnPhoto {
+    white-space: normal;
+    word-wrap: break-word;
+    height:110px;
+    width: 110px;
+}
+.labelbig {
+    color: #78b1eb;
+    font-size: 24pt;
+    font-weight: bold;
+}

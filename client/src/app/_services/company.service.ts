@@ -23,6 +23,14 @@ export class CompanyService {
     return this.http.post(this.baseUrl + 'company/newOffer', model);
   }
 
+  updateOffer(offerId: number, model: any) {
+    return this.http.put(this.baseUrl + 'company/updateOffer/' + offerId, model);
+  }
+
+  deleteOffer(offerId: number) {
+    return this.http.delete(this.baseUrl + 'company/deleteOffer/' + offerId);
+  }
+
   setOfferMainPhoto(offerId: number, photoId: number) {
     return this.http.put(this.baseUrl + 'company/set-offer-main-photo/' + offerId + '/' + photoId, {});
   }
@@ -32,7 +40,7 @@ export class CompanyService {
   }
 
   getOffer(offerId: number) {
-    return this.http.get(this.baseUrl + 'company/getOffer/' + offerId);
+    return this.http.get<Offer>(this.baseUrl + 'company/getOffer/' + offerId);
   }
 
   getOffersFromCategory(model: any) {
