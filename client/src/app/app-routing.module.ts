@@ -5,6 +5,9 @@ import { OfferNewComponent } from './company/offer-new/offer-new.component';
 import { OffersComponent } from './company/offers/offers.component';
 import { HomeComponent } from './home/home.component';
 import { MainComponent } from './main/main.component';
+import { JobRequestComponent } from './user/job-request/job-request.component';
+import { OfferShowComponent } from './user/offer-show/offer-show.component';
+import { OffersMainComponent } from './user/offers-main/offers-main.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { CompanyGuard } from './_guards/company.guard';
 
@@ -16,6 +19,9 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {path: 'main', component: MainComponent},
+      {path: 'offers-main/:category', component: OffersMainComponent},
+      {path: 'offer-show/:id', component: OfferShowComponent},
+      {path: 'job-request/:id', component: JobRequestComponent},
       {path: 'offer-new', component: OfferNewComponent, canActivate: [CompanyGuard]},
       {path: 'offers', component: OffersComponent, canActivate: [CompanyGuard]},
       {path: 'offer-edit/:id', component: OfferEditComponent, canActivate: [CompanyGuard]},

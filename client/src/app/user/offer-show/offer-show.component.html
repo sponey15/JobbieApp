@@ -1,0 +1,59 @@
+<div class="col-2"></div>
+<div class="container col-8" *ngIf="offer" style="text-align: center;">
+<div class="row">
+    <div class="col text-center">
+        <label for="title" class="labelbig">{{offer.title | titlecase}}</label>
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+        <label for="title" class="label">Company name</label>
+        <input type="text" name="title" id="" class="form-control" 
+               [(ngModel)]="offer.companyName"
+               style="text-align: center;"
+               disabled="true">
+    </div>
+    <div class="col-sm-3">
+        
+    </div>
+</div>
+<div class="row mt-2">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+        <label for="title" class="label">Price in PLN</label>
+        <input type="number" name="price" id="" class="form-control" 
+               [(ngModel)]="offer.price"
+               style="text-align: center;"
+               disabled="true">
+    </div>
+    <div class="col-sm-4"></div>
+</div>
+<div class="row mt-2">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+    <label for="Description" class="label">Description</label>
+    <textarea 
+        cols="30" 
+        rows="5"
+        class="form-control"
+        disabled="true"
+        [(ngModel)]="offer.description"></textarea>
+    </div>
+    <div class="col-sm-2"></div>
+</div>
+<div class="row mt-4">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-10"><label for="title" class="label">Offer gallery</label>
+    <ngx-gallery [options]="galleryOptions" [images]="galleryImages" 
+                        style="display: inline-block; margin-bottom: 20px;"></ngx-gallery>
+    </div>
+    <div class="col-sm-1"></div>
+</div>
+<div class="row mt-4 mb-4">
+    <div class="col-md-12 text-right">
+        <button  class="btn btn-info mr-2" (click)="backClicked()">Back to offers</button>
+        <button  class="btn btn-success mr-4" routerLink='/job-request/{{offer.id}}' routerLinkActive='active'>I am interested!</button>
+    </div>
+</div>
+</div>

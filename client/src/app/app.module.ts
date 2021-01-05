@@ -22,6 +22,11 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { OfferEditComponent } from './company/offer-edit/offer-edit.component';
+import { OffersMainComponent } from './user/offers-main/offers-main.component';
+import { OfferShowComponent } from './user/offer-show/offer-show.component';
+import { JobRequestComponent } from './user/job-request/job-request.component';
+import { JobsComponent } from './user/jobs/jobs.component';
+import { CompanyJobsComponent } from './company/company-jobs/company-jobs.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +39,12 @@ import { OfferEditComponent } from './company/offer-edit/offer-edit.component';
     OffersComponent,
     OfferNewComponent,
     PhotoEditorComponent,
-    OfferEditComponent
+    OfferEditComponent,
+    OffersMainComponent,
+    OfferShowComponent,
+    JobRequestComponent,
+    JobsComponent,
+    CompanyJobsComponent
   ],
   imports: [
     BrowserModule,
