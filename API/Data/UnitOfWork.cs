@@ -17,6 +17,8 @@ namespace API.Data
 
         public IOfferRepository OfferRepository => new OfferRepository(_context, _mapper);
 
+        public IWorkRepository WorkRepository => new WorkRepository(_context, _mapper);
+
         // public void Add<T>(T entity) where T : class
         // {
         //     _context.Add(entity);

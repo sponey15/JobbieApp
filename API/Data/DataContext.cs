@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using static API.Entities.Offer;
+using static API.Entities.Work;
 
 namespace API.Data
 {
@@ -14,6 +15,8 @@ namespace API.Data
         public DataContext(DbContextOptions options) : base(options){}
         public DbSet<Offer> Offers { get; set; }
         public DbSet<Photo> Photo { get; set; }
+        public DbSet<Work> Works { get; set; }
+        public DbSet<WorkTask> WorkTasks { get; set; }
         
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -36,6 +39,12 @@ namespace API.Data
                 .HasConversion(
                     v => v.ToString(),
                     v => (OfferCategory)Enum.Parse(typeof(OfferCategory), v));
+            
+            builder.Entity<Work>()
+                .Property(w => w.WorkStatusName)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (WorkStatus)Enum.Parse(typeof(WorkStatus), v));
         }
     }
 }

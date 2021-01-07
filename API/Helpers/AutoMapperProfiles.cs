@@ -12,6 +12,10 @@ namespace API.Helpers
             CreateMap<OfferToAddDto, Offer>();
             CreateMap<OfferCategoryDto, Offer>();
             CreateMap<PhotoDto, Photo>().ReverseMap();
+            CreateMap<WorkDto, Work>();
+            CreateMap<WorkTaskDto, WorkTask>();
+            CreateMap<WorkUpdateDto, Work>();
+            CreateMap<WorkStatusDto, Work>();
         }
     }
 }

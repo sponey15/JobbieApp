@@ -53,7 +53,7 @@
 <div class="row mt-4 mb-4">
     <div class="col-md-12 text-right">
         <button  class="btn btn-info mr-2" (click)="backClicked()">Back to offers</button>
-        <button  class="btn btn-success mr-4" routerLink='/job-request/{{offer.id}}' routerLinkActive='active'>I am interested!</button>
+        <button  *appHasRole='["User"]' class="btn btn-success mr-4" routerLink='/job-request/{{offer.id}}' routerLinkActive='active'>I am interested!</button>
     </div>
 </div>
 </div>

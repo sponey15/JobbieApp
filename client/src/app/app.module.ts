@@ -27,6 +27,8 @@ import { OfferShowComponent } from './user/offer-show/offer-show.component';
 import { JobRequestComponent } from './user/job-request/job-request.component';
 import { JobsComponent } from './user/jobs/jobs.component';
 import { CompanyJobsComponent } from './company/company-jobs/company-jobs.component';
+import { JobShowComponent } from './user/job-show/job-show.component';
+// import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { CompanyJobsComponent } from './company/company-jobs/company-jobs.compon
     OfferShowComponent,
     JobRequestComponent,
     JobsComponent,
-    CompanyJobsComponent
+    CompanyJobsComponent,
+    JobShowComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +63,11 @@ import { CompanyJobsComponent } from './company/company-jobs/company-jobs.compon
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     })
+    // ,
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'AIzaSyCDebS-_7-iRMKAVIf-v4t7QJCUDKUm8rc',
+    //   libraries: ['places']
+    // })
   ],
   providers: [
     AccountService,
