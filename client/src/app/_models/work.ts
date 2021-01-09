@@ -1,3 +1,4 @@
+import { Photo } from "./photo";
 import { WorkTask } from "./workTask";
 
 export interface Work {
@@ -14,6 +15,7 @@ export interface Work {
     userId?: number;
     workStatusName: string;
     workTasks?: WorkTask[];
+    photos?: Photo[];
 }
 
 export interface WorkStatus {

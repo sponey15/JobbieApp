@@ -59,6 +59,7 @@ namespace API.Data
 
             return await _context.Works
                             .Include(w => w.WorkTasks)
+                            .Include(w => w.Offer)
                             .Where(x => x.WorkStatusName == workStatus.WorkStatusName 
                                      && x.Offer.CompanyName == companyName)
                             .ToListAsync();
@@ -70,6 +71,7 @@ namespace API.Data
 
             return await _context.Works
                             .Include(w => w.WorkTasks)
+                            .Include(w => w.Offer)
                             .Where(x => x.WorkStatusName == workStatus.WorkStatusName 
                                      && x.UserId == userId)
                             .ToListAsync();

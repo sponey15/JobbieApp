@@ -28,6 +28,7 @@ import { JobRequestComponent } from './user/job-request/job-request.component';
 import { JobsComponent } from './user/jobs/jobs.component';
 import { CompanyJobsComponent } from './company/company-jobs/company-jobs.component';
 import { JobShowComponent } from './user/job-show/job-show.component';
+import { CompanyJobShowComponent } from './company/company-job-show/company-job-show.component';
 // import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
@@ -47,7 +48,8 @@ import { JobShowComponent } from './user/job-show/job-show.component';
     JobRequestComponent,
     JobsComponent,
     CompanyJobsComponent,
-    JobShowComponent
+    JobShowComponent,
+    CompanyJobShowComponent
   ],
   imports: [
     BrowserModule,

@@ -16,7 +16,7 @@ export class WorkService {
   }
 
   getWork(workId: any, offerId: any) {
-    return this.http.get(this.baseUrl + 'work/getWork/' + workId + '/' + offerId);
+    return this.http.get<Work>(this.baseUrl + 'work/getWork/' + workId + '/' + offerId);
   }
 
   newWorkTask(model: any) {
@@ -24,7 +24,7 @@ export class WorkService {
   }
 
   updateWorkTask(workTaskId: any, isComplete: any) {
-    return this.http.get(this.baseUrl + 'work/updateWorkTask/' + workTaskId + '/' + isComplete);
+    return this.http.put(this.baseUrl + 'work/updateWorkTask/' + workTaskId + '/' + isComplete, {});
   }
 
   updateWork(workId: any, model: any) {
@@ -36,6 +36,6 @@ export class WorkService {
   }
 
   getUserWorksFromStatus(model: any) {
-    return this.http.post(this.baseUrl + 'work/getUserWorksFromStatus', model);
+    return this.http.post<Work>(this.baseUrl + 'work/getUserWorksFromStatus', model);
   }
 }

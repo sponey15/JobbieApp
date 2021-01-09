@@ -20,6 +20,3 @@ input[type="checkbox"] { /* change "blue" browser chrome to yellow */
     width: 30px !important;
     height: 30px !important;
 }
-input[type=checkbox][disabled]{
-    
-}

@@ -124,6 +124,12 @@ namespace API.Controllers
 
             if (works == null) return BadRequest("There is no works");
 
+            foreach (var work in works)
+            {
+                var offer = await _unitOfWork.OfferRepository.GetOfferByIdAsync(work.OfferId);
+                work.Offer = offer;
+            }
+
             return Ok(works);
         }
 
@@ -135,6 +141,12 @@ namespace API.Controllers
             var works = await _unitOfWork.WorkRepository.GetUserWorksFromStatusAsync(userId, workStatusDto);
 
             if (works == null) return BadRequest("There is no works");
+
+            foreach (var work in works)
+            {
+                var offer = await _unitOfWork.OfferRepository.GetOfferByIdAsync(work.OfferId);
+                work.Offer = offer;
+            }
 
             return Ok(works);
         }

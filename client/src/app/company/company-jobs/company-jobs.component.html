@@ -1,1 +1,74 @@
-<p>company-jobs works!</p>
+<div class="container">
+    <div class="row mt-2 mb-5">
+        <div class="col text-center">
+            <label for="title" class="labelbig">Current jobs</label>
+        </div>
+    </div>
+    <div class="row mt-8 mb-2">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-2">
+            <label for="selectedCategory" class="label">Category</label>
+            <select [(ngModel)]="selectedCategory" class="form-control" name='selectedCategory' (change)="getWorks()">
+                <option *ngFor="let o of options">
+                    {{o.workStatusName}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-sm-2"></div>
+        <div class="col-8">
+            <table class="table table-striped ">
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">
+                            <div style="text-align: left; margin-left: 50px;">
+                                Job title
+                            </div>
+                        </th>
+                        <th style="width: 20%;">
+                            <div style="text-align: center; ">
+                                Company name
+                            </div>
+                        </th>
+                        <th style="width: 20%;"></th>
+                        <th style="width: 20%;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let work of works">
+                        <td>
+                            <div style="margin-top: 40px;  text-align: left; margin-left: 65px;">
+                                {{work.title}}
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-top: 40px; text-align: center;">
+                                {{work.offer.companyName}}
+                            </div>
+                        </td>
+                        <td>
+                            <button style="margin-top: 40px; margin-left: 20px;" class="btn btn-info" routerLink='/company-job-show/{{work.id}}/{{work.offerId}}' routerLinkActive='active'>Show job</button>
+                        </td>
+                        <td  style="text-align: center;" >
+                            <div *ngIf="work.offer?.photos == 0">
+                                <img src="{{'./assets/icons/offer.png'}}" alt="photo" 
+                                    class="card-img img-thumbnail">
+                            </div>
+                            <div *ngIf="work.offer?.photos.length != 0">
+                                <div *ngFor="let photo of work.offer?.photos">
+                                    <img *ngIf="photo.isMain == true"
+                                    src="{{photo.url || './assets/icons/offer.png'}}" alt="photo" 
+                                    class="card-img img-thumbnail">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+    </div>

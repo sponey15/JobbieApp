@@ -92,12 +92,30 @@
                 </td>
                 <td>
                     <div>
-                      <input type="checkbox" class="checkboxClass" disabled="true" checked="checked" *ngIf="w.isComplete == true">
-                      <input type="checkbox" class="" disabled="true" *ngIf="w.isComplete == false">
+                      <input type="checkbox" class="checkboxClass" checked="checked"
+                             *ngIf="w.isComplete == true && work?.workStatusName == 'InProgress'" (click)="updateWorkTask(w.id, w.isComplete)">
+                      <input type="checkbox" class="" 
+                             *ngIf="w.isComplete == false && work?.workStatusName == 'InProgress'" (click)="updateWorkTask(w.id, w.isComplete)">
+                      <input type="checkbox" class="checkboxClass" checked="checked" disabled="true"
+                             *ngIf="w.isComplete == true && work?.workStatusName != 'InProgress'">
+                      <input type="checkbox" class="" disabled="true"
+                             *ngIf="w.isComplete == false && work?.workStatusName != 'InProgress'">
                     </div>
                   </td>
             </tr>
         </tbody>
       </table>
+    </div>
+    <div class="row mt-4 mb-4">
+        <div class="col-md-12 text-right">
+            <button  class="btn btn-danger mr-2"
+                     *ngIf="work?.workStatusName == 'InProgress'" (click)="finishJob()">End job</button>
+            <button  class="btn btn-danger mr-2"
+                     *ngIf="work?.workStatusName == 'Pending'" (click)="finishJob()">Decline job</button>
+            <button  class="btn btn-success"
+                     *ngIf="work?.workStatusName == 'Pending'" (click)="acceptJob()">Accept job</button>
+            <button  class="btn btn-success"
+                     *ngIf="work?.workStatusName == 'InProgress'" (click)="backClicked()">Back to jobs</button>
+        </div>
     </div>
 </div>
