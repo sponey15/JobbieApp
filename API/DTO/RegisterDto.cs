@@ -16,7 +16,6 @@ namespace API.DTO
         [Required] public string City { get; set; }
         [Required] public string ZipCode { get; set; }
         [Required] public DateTime BirthDate { get; set; }
-        //public string Description { get; set; }
         [Required] public string AccountType { get; set; }
     }
 }

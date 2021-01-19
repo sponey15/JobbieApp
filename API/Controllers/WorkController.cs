@@ -22,8 +22,8 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireUserRole")]
-        [HttpPost("newWork")]
-        public async Task<ActionResult<Work>> NewWork(WorkDto workDto)
+        [HttpPost("works")]
+        public async Task<ActionResult<Work>> CreateWork(WorkDto workDto)
         {
             var userId = User.GetUserId();
             var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
@@ -46,8 +46,8 @@ namespace API.Controllers
             return BadRequest("Saving work didn't succeed");
         }
 
-        [HttpGet("getWork/{workId}/{offerId}")]
-        public async Task<ActionResult<Work>> GetWork(int workId, int offerId)
+        [HttpGet("works/{workId}/{offerId}")]
+        public async Task<ActionResult<Work>> ChoosenWork(int workId, int offerId)
         {
             var userId = User.GetUserId();
             var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
@@ -60,8 +60,8 @@ namespace API.Controllers
             return Ok(work);
         }
 
-        [HttpPost("newWorkTask")]
-        public async Task<ActionResult<WorkTask>> NewWorkTask(WorkTaskDto workTaskDto)
+        [HttpPost("work-tasks")]
+        public async Task<ActionResult<WorkTask>> CreateWorkTask(WorkTaskDto workTaskDto)
         {
             var work = await _unitOfWork.WorkRepository.GetWorkByIdAsync(workTaskDto.WorkId);
 
@@ -79,7 +79,7 @@ namespace API.Controllers
             return BadRequest("Saving work task didn't succeed");
         }
 
-        [HttpPut("updateWorkTask/{workTaskId}/{isComplete}")]
+        [HttpPut("work-tasks/{workTaskId}/{isComplete}")]
         public async Task<ActionResult<WorkTask>> UpdateWorkTask(int workTaskId, bool isComplete)
         {
             var workTask = await _unitOfWork.WorkRepository.GetWorkTaskByIdAsync(workTaskId);
@@ -97,7 +97,7 @@ namespace API.Controllers
             return BadRequest("Saving work task didn't succeed");
         }
 
-        [HttpPut("updateWork/{workId}")]
+        [HttpPut("works/{workId}")]
         public async Task<ActionResult<Work>> UpdateWork(int workId, WorkUpdateDto workUpdateDto)
         {
             var work = await _unitOfWork.WorkRepository.GetWorkByIdAsync(workId);
@@ -115,7 +115,7 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireCompanyRole")]
-        [HttpPost("getCompanyWorksFromStatus")]
+        [HttpPost("company-works/status")]
         public async Task<ActionResult<WorkTask>> GetCompanyWorksFromStatus(WorkStatusDto workStatusDto)
         {
             var userId = User.GetUserId();
@@ -134,7 +134,7 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireUserRole")]
-        [HttpPost("getUserWorksFromStatus")]
+        [HttpPost("user-works/status")]
         public async Task<ActionResult<WorkTask>> GetUserWorksFromStatus(WorkStatusDto workStatusDto)
         {
             var userId = User.GetUserId();

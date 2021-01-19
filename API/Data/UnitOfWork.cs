@@ -18,21 +18,7 @@ namespace API.Data
         public IOfferRepository OfferRepository => new OfferRepository(_context, _mapper);
 
         public IWorkRepository WorkRepository => new WorkRepository(_context, _mapper);
-
-        // public void Add<T>(T entity) where T : class
-        // {
-        //     _context.Add(entity);
-        // }
-
-        // public void DeleteRange<T>(T entity) where T : class
-        // {
-        //     _context.RemoveRange(entity);
-        // }
-
-        // public void Delete<T>(T entity) where T : class
-        // {
-        //     _context.Remove(entity);
-        // }
+        
         public async Task<bool> SaveAll()
         {
             return await _context.SaveChangesAsync() > 0;

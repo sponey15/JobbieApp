@@ -29,8 +29,8 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireCompanyRole")]
-        [HttpPost("newOffer")]
-        public async Task<ActionResult<Offer>> NewOffer(OfferToAddDto offerToAddDto)
+        [HttpPost("offers")]
+        public async Task<ActionResult<Offer>> CreateOffer(OfferToAddDto offerToAddDto)
         {
             var companyId = User.GetUserId();
             var company = await _unitOfWork.UserRepository.GetUserByIdAsync(companyId);
@@ -50,7 +50,7 @@ namespace API.Controllers
             return BadRequest("Adding offer didn't succeed");
         }
 
-        [HttpPut("updateOffer/{offerId}")]
+        [HttpPut("offers/{offerId}")]
         public async Task<ActionResult<Offer>> UptateOffer(int offerId, OfferToAddDto offerToAddDto)
         {
             var companyId = User.GetUserId();
@@ -73,7 +73,7 @@ namespace API.Controllers
             return BadRequest("Updating offer didn't succeed");
         }
 
-        [HttpDelete("deleteOffer/{offerId}")]
+        [HttpDelete("offers/{offerId}")]
         public async Task<ActionResult> DeleteOffer(int offerId)
         {
             var companyId = User.GetUserId();
@@ -98,31 +98,31 @@ namespace API.Controllers
             return BadRequest("Deleting offer didn't succeed");
         }
 
-        //all offers from company
-        [HttpGet("getOffer/{offerId}")]
+        [HttpGet("offers/{offerId}")]
         public async Task<ActionResult<Offer>> GetOffer(int offerId)
         {
             return await _unitOfWork.OfferRepository.GetOfferByIdAsync(offerId);
         }
 
-        [HttpGet("getOfferFromCategory")]
-        public async Task<ActionResult<IEnumerable<Offer>>> GetOffersFromCategory(OfferCategoryDto offerCategoryDto)
+        [HttpGet("category-offers")]
+        public async Task<ActionResult<IEnumerable<Offer>>> CategoryOffers(OfferCategoryDto offerCategoryDto)
         {
             var offers = await _unitOfWork.OfferRepository.GetOffersFromCategoryAsync(offerCategoryDto);
 
             return Ok(offers);
         }
 
-        [HttpGet("getOfferFromCompany/{companyName}")]
-        public async Task<ActionResult<IEnumerable<Offer>>> GetOffersFromCompany(string companyName)
+        [HttpGet("company-offers/{companyName}")]
+        public async Task<ActionResult<IEnumerable<Offer>>> CompanyOffers(string companyName)
         {
             var offers = await _unitOfWork.OfferRepository.GetOffersFromCompanyAsync(companyName);
 
             return Ok(offers);
         }
 
-        [HttpPost("getCompanyOffersFromCategory/{companyName}")]
-        public async Task<ActionResult<IEnumerable<Offer>>> GetCompanyOffersFromCategory(string companyName, OfferCategoryDto offerCategoryDto)
+        [HttpPost("company-offers/{companyName}/categories")]
+        public async Task<ActionResult<IEnumerable<Offer>>> CompanyOffersFromCategory(string companyName, 
+                                                                                      OfferCategoryDto offerCategoryDto)
         {
             var offers = await _unitOfWork.OfferRepository.GetCompanyOffersFromCategory(companyName, offerCategoryDto);
 

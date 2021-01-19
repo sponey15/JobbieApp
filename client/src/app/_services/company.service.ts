@@ -20,15 +20,15 @@ export class CompanyService {
   }
 
   addNewOffer(model: any) {
-    return this.http.post(this.baseUrl + 'company/newOffer', model);
+    return this.http.post(this.baseUrl + 'company/offers', model);
   }
 
   updateOffer(offerId: number, model: any) {
-    return this.http.put(this.baseUrl + 'company/updateOffer/' + offerId, model);
+    return this.http.put(this.baseUrl + 'company/offers/' + offerId, model);
   }
 
   deleteOffer(offerId: number) {
-    return this.http.delete(this.baseUrl + 'company/deleteOffer/' + offerId);
+    return this.http.delete(this.baseUrl + 'company/offers/' + offerId);
   }
 
   setOfferMainPhoto(offerId: number, photoId: number) {
@@ -40,18 +40,18 @@ export class CompanyService {
   }
 
   getOffer(offerId: number) {
-    return this.http.get<Offer>(this.baseUrl + 'company/getOffer/' + offerId);
+    return this.http.get<Offer>(this.baseUrl + 'company/offers/' + offerId);
   }
 
   getOffersFromCategory(model: any) {
-    return this.http.get(this.baseUrl + 'company/getOfferFromCategory', model);
+    return this.http.get(this.baseUrl + 'company/category-offers', model);
   }
 
   getOffersFromCompany(companyName: string) {
-    return this.http.get(this.baseUrl + 'company/getOfferFromCompany/' + companyName);
+    return this.http.get(this.baseUrl + 'company/company-offers/' + companyName);
   }
 
   getCompanyOffersFromCategory(companyName: string, model: any) {
-    return this.http.post(this.baseUrl + 'company/getCompanyOffersFromCategory/' + companyName, model);
+    return this.http.post(this.baseUrl + 'company/company-offers/' + companyName + '/categories', model);
   }
 }

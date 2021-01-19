@@ -12,30 +12,30 @@ export class WorkService {
   constructor(private http: HttpClient) { }
 
   newWork(model: any) {
-    return this.http.post<Work>(this.baseUrl + 'work/newWork', model);
+    return this.http.post<Work>(this.baseUrl + 'work/works', model);
   }
 
   getWork(workId: any, offerId: any) {
-    return this.http.get<Work>(this.baseUrl + 'work/getWork/' + workId + '/' + offerId);
+    return this.http.get<Work>(this.baseUrl + 'work/works/' + workId + '/' + offerId);
   }
 
   newWorkTask(model: any) {
-    return this.http.post(this.baseUrl + 'work/newWorkTask', model);
+    return this.http.post(this.baseUrl + 'work/work-tasks', model);
   }
 
   updateWorkTask(workTaskId: any, isComplete: any) {
-    return this.http.put(this.baseUrl + 'work/updateWorkTask/' + workTaskId + '/' + isComplete, {});
+    return this.http.put(this.baseUrl + 'work/work-tasks/' + workTaskId + '/' + isComplete, {});
   }
 
   updateWork(workId: any, model: any) {
-    return this.http.put(this.baseUrl + 'work/updateWork/' + workId, model);
+    return this.http.put(this.baseUrl + 'work/works/' + workId, model);
   }
 
   getCompanyWorksFromStatus(model: any) {
-    return this.http.post(this.baseUrl + 'work/getCompanyWorksFromStatus', model);
+    return this.http.post(this.baseUrl + 'work/company-works/status', model);
   }
 
   getUserWorksFromStatus(model: any) {
-    return this.http.post<Work>(this.baseUrl + 'work/getUserWorksFromStatus', model);
+    return this.http.post<Work>(this.baseUrl + 'work/user-works/status', model);
   }
 }

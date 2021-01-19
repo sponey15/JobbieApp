@@ -28,8 +28,8 @@ namespace API.Controllers
             _photoService = photoService;
         }
 
-        [HttpPost("getOffersFromCategory")]
-        public async Task<ActionResult<IEnumerable<Offer>>> GetOffersFromCategory(OfferCategoryDto offerCategoryDto)
+        [HttpPost("category-offers")]
+        public async Task<ActionResult<IEnumerable<Offer>>> OffersFromCategory(OfferCategoryDto offerCategoryDto)
         {
             var offers = await _unitOfWork.OfferRepository.GetOffersFromCategory(offerCategoryDto);
 

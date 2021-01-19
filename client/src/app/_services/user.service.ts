@@ -11,6 +11,6 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getOffersFromCategory(model: any) {
-    return this.http.post(this.baseUrl + 'user/getOffersFromCategory', model);
+    return this.http.post(this.baseUrl + 'user/category-offers', model);
   }
 }
