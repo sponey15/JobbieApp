@@ -2,6 +2,10 @@ using System.Collections.Generic;
 
 namespace API.Entities
 {
+    public enum OfferCategory
+    {
+        Renovation, Painting, Transport, Electrician, Assembly, Electronics, Plumber, Cleaning, Handyman
+    }
     public class Offer
     {
         public int Id { get; set; }
@@ -10,10 +14,6 @@ namespace API.Entities
         public int Price { get; set; }
         public string CompanyName { get; set; }
         private OfferCategory offerCategoryName;
-        public enum OfferCategory
-        {
-            Renovation, Painting, Transport, Electrician, Assembly, Electronics, Plumber, Cleaning, Handyman
-        }
         public OfferCategory OfferCategoryName
         {
             get { return offerCategoryName; }

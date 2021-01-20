@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.DTO;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -44,7 +45,7 @@ namespace API.Controllers
 
             if (await _unitOfWork.SaveAll())
             {
-                return Ok(offer);
+                return CreatedAtRoute("offers", new { offerId = offer.Id }, offer);
             }
 
             return BadRequest("Adding offer didn't succeed");
@@ -62,8 +63,6 @@ namespace API.Controllers
 
             var offer = _mapper.Map(offerToAddDto, offerToUpdate);
             offer.CompanyName = company.UserName;
-
-            //_unitOfWork.OfferRepository.Update(offer);
 
             if (await _unitOfWork.SaveAll())
             {
@@ -92,39 +91,50 @@ namespace API.Controllers
 
             if (await _unitOfWork.SaveAll())
             {
-                return Ok();
+                return NoContent();
             }
 
             return BadRequest("Deleting offer didn't succeed");
         }
 
-        [HttpGet("offers/{offerId}")]
+        [HttpGet("offers/{offerId}", Name = "offers")]
         public async Task<ActionResult<Offer>> GetOffer(int offerId)
         {
             return await _unitOfWork.OfferRepository.GetOfferByIdAsync(offerId);
         }
 
-        [HttpGet("category-offers")]
-        public async Task<ActionResult<IEnumerable<Offer>>> CategoryOffers(OfferCategoryDto offerCategoryDto)
+        [HttpGet("category-offers/{offerCategory}")]
+        public async Task<ActionResult<IEnumerable<Offer>>> CategoryOffers(OfferCategory offerCategory,
+            [FromQuery] PaginationParams paginationParams)
         {
-            var offers = await _unitOfWork.OfferRepository.GetOffersFromCategoryAsync(offerCategoryDto);
+            var offers = await _unitOfWork.OfferRepository.GetOffersFromCategoryAsync(offerCategory, paginationParams);
+
+            Response.AddPaginationHeader(offers.CurrentPage, offers.PageSize,
+                offers.TotalCount, offers.TotalPages);
 
             return Ok(offers);
         }
 
         [HttpGet("company-offers/{companyName}")]
-        public async Task<ActionResult<IEnumerable<Offer>>> CompanyOffers(string companyName)
+        public async Task<ActionResult<IEnumerable<Offer>>> CompanyOffers(string companyName,
+            [FromQuery] PaginationParams paginationParams)
         {
-            var offers = await _unitOfWork.OfferRepository.GetOffersFromCompanyAsync(companyName);
+            var offers = await _unitOfWork.OfferRepository.GetOffersFromCompanyAsync(companyName, paginationParams);
+
+            Response.AddPaginationHeader(offers.CurrentPage, offers.PageSize,
+                offers.TotalCount, offers.TotalPages);
 
             return Ok(offers);
         }
 
-        [HttpPost("company-offers/{companyName}/categories")]
+        [HttpGet("company-offers/{companyName}/{offerCategory}")]
         public async Task<ActionResult<IEnumerable<Offer>>> CompanyOffersFromCategory(string companyName, 
-                                                                                      OfferCategoryDto offerCategoryDto)
+            OfferCategory offerCategory, [FromQuery] PaginationParams paginationParams)
         {
-            var offers = await _unitOfWork.OfferRepository.GetCompanyOffersFromCategory(companyName, offerCategoryDto);
+            var offers = await _unitOfWork.OfferRepository.GetCompanyOffersFromCategoryAsync(companyName, offerCategory, paginationParams);
+
+            Response.AddPaginationHeader(offers.CurrentPage, offers.PageSize,
+                offers.TotalCount, offers.TotalPages);
 
             return Ok(offers);
         }
@@ -149,12 +159,11 @@ namespace API.Controllers
                 photo.IsMain = true;
             }
 
-            var photoForReturn = _mapper.Map<PhotoDto>(photo);
             offer.Photos.Add(photo);
 
             if (await _unitOfWork.SaveAll())
             {
-                return Ok(photoForReturn);
+                return CreatedAtRoute("offers", new { offerId = offer.Id }, _mapper.Map<PhotoDto>(photo));
             }
 
             return BadRequest("Adding photo didn't succeed");
@@ -196,7 +205,7 @@ namespace API.Controllers
 
             offer.Photos.Remove(photo);
 
-            if (await _unitOfWork.SaveAll()) return Ok();
+            if (await _unitOfWork.SaveAll()) return NoContent();
 
             return BadRequest("Failed to delete the photo");
         }

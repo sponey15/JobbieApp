@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace API.Entities
 {
+    public enum WorkStatus
+    {
+        Pending, InProgress, Archive
+    }
     public class Work
     {
         public int Id { get; set; }
@@ -19,10 +23,6 @@ namespace API.Entities
         public User User { get; set; }
         public int UserId { get; set; }
         private WorkStatus workStatusName;
-        public enum WorkStatus
-        {
-            Pending, InProgress, Archive
-        }
         public WorkStatus WorkStatusName
         {
             get { return workStatusName; }

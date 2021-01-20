@@ -3,8 +3,6 @@ using API.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using static API.Entities.Offer;
-using static API.Entities.Work;
 
 namespace API.Data
 {

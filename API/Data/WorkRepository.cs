@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.DTO;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -53,28 +54,28 @@ namespace API.Data
                             .SingleOrDefaultAsync(x => x.Id == workTaskId);
         }
 
-        public async Task<IEnumerable<Work>> GetCompanyWorksFromStatusAsync(string companyName, WorkStatusDto workStatusDto)
+        public async Task<PagedList<Work>> GetCompanyWorksFromStatusAsync(string companyName, WorkStatus workStatus,
+            PaginationParams paginationParams)
         {
-            var workStatus = _mapper.Map<Work>(workStatusDto);
-
-            return await _context.Works
+            var query = _context.Works
                             .Include(w => w.WorkTasks)
                             .Include(w => w.Offer)
-                            .Where(x => x.WorkStatusName == workStatus.WorkStatusName 
+                            .Where(x => x.WorkStatusName == workStatus
                                      && x.Offer.CompanyName == companyName)
-                            .ToListAsync();
+                            .AsNoTracking();
+            return await PagedList<Work>.CreateAsync(query, paginationParams.PageNumber, paginationParams.PageSize);
         }
 
-        public async Task<IEnumerable<Work>> GetUserWorksFromStatusAsync(int userId, WorkStatusDto workStatusDto)
+        public async Task<PagedList<Work>> GetUserWorksFromStatusAsync(int userId, WorkStatus workStatus,
+            PaginationParams paginationParams)
         {
-            var workStatus = _mapper.Map<Work>(workStatusDto);
-
-            return await _context.Works
+            var query = _context.Works
                             .Include(w => w.WorkTasks)
                             .Include(w => w.Offer)
-                            .Where(x => x.WorkStatusName == workStatus.WorkStatusName 
+                            .Where(x => x.WorkStatusName == workStatus
                                      && x.UserId == userId)
-                            .ToListAsync();
+                            .AsNoTracking();
+            return await PagedList<Work>.CreateAsync(query, paginationParams.PageNumber, paginationParams.PageSize);
         }
     }
 }

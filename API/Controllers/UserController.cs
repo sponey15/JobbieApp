@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.DTO;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -28,10 +29,14 @@ namespace API.Controllers
             _photoService = photoService;
         }
 
-        [HttpPost("category-offers")]
-        public async Task<ActionResult<IEnumerable<Offer>>> OffersFromCategory(OfferCategoryDto offerCategoryDto)
+        [HttpGet("category-offers")]
+        public async Task<ActionResult<IEnumerable<Offer>>> OffersFromCategory(OfferCategory offerCategory,
+            [FromQuery] PaginationParams paginationParams)
         {
-            var offers = await _unitOfWork.OfferRepository.GetOffersFromCategory(offerCategoryDto);
+            var offers = await _unitOfWork.OfferRepository.GetOffersFromCategoryAsync(offerCategory, paginationParams);
+
+            Response.AddPaginationHeader(offers.CurrentPage, offers.PageSize,
+                offers.TotalCount, offers.TotalPages);
 
             return Ok(offers);
         }

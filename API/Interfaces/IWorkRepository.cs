@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTO;
 using API.Entities;
+using API.Helpers;
 
 namespace API.Interfaces
 {
@@ -13,7 +14,9 @@ namespace API.Interfaces
         void Update(Work work);
         Task<Work> GetWorkByIdAsync(int workId);
         Task<WorkTask> GetWorkTaskByIdAsync(int workTaskId);
-        Task<IEnumerable<Work>> GetCompanyWorksFromStatusAsync(string companyName, WorkStatusDto workStatusDto);
-        Task<IEnumerable<Work>> GetUserWorksFromStatusAsync(int userId, WorkStatusDto workStatusDto);
+        Task<PagedList<Work>> GetCompanyWorksFromStatusAsync(string companyName, WorkStatus workStatus,
+            PaginationParams paginationParams);
+        Task<PagedList<Work>> GetUserWorksFromStatusAsync(int userId, WorkStatus workStatus,
+            PaginationParams paginationParams);
     }
 }

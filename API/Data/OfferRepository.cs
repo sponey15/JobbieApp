@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.DTO;
 using API.Entities;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -41,42 +42,36 @@ namespace API.Data
                 .SingleOrDefaultAsync(x => x.Id == offerId);
         }
 
-        public async Task<IEnumerable<Offer>> GetOffersFromCategoryAsync(OfferCategoryDto offerCategoryDto)
+        public async Task<PagedList<Offer>> GetOffersFromCategoryAsync(OfferCategory offerCategory,
+            PaginationParams paginationParams)
         {
-            var offerCategory = _mapper.Map<Offer>(offerCategoryDto);
-
-            return await _context.Offers
-                .Where(x => x.OfferCategoryName == offerCategory.OfferCategoryName)
+            var query = _context.Offers
+                .Where(x => x.OfferCategoryName == offerCategory)
                 .Include(p => p.Photos)
-                .ToListAsync();
+                .OrderBy(x => x.Id)
+                .AsNoTracking();
+            return await PagedList<Offer>.CreateAsync(query, paginationParams.PageNumber, paginationParams.PageSize);
         }
 
-        public async Task<IEnumerable<Offer>> GetOffersFromCompanyAsync(string companyName)
+        public async Task<PagedList<Offer>> GetOffersFromCompanyAsync(string companyName, PaginationParams paginationParams)
         {
-            return await _context.Offers
+            var query = _context.Offers
                 .Where(x => x.CompanyName == companyName)
                 .Include(p => p.Photos)
-                .ToListAsync();
+                .OrderBy(x => x.Id)
+                .AsNoTracking();
+            return await PagedList<Offer>.CreateAsync(query, paginationParams.PageNumber, paginationParams.PageSize);
         }
 
-        public async Task<IEnumerable<Offer>> GetCompanyOffersFromCategory(string companyName, OfferCategoryDto offerCategoryDto)
+        public async Task<PagedList<Offer>> GetCompanyOffersFromCategoryAsync(string companyName, OfferCategory offerCategory,
+            PaginationParams paginationParams)
         {
-            var offerCategory = _mapper.Map<Offer>(offerCategoryDto);
-
-            return await _context.Offers
-                .Where(x => x.OfferCategoryName == offerCategory.OfferCategoryName && x.CompanyName == companyName)
+            var query = _context.Offers
+                .Where(x => x.OfferCategoryName == offerCategory && x.CompanyName == companyName)
                 .Include(p => p.Photos)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Offer>> GetOffersFromCategory(OfferCategoryDto offerCategoryDto)
-        {
-            var offerCategory = _mapper.Map<Offer>(offerCategoryDto);
-
-            return await _context.Offers
-                .Where(x => x.OfferCategoryName == offerCategory.OfferCategoryName)
-                .Include(p => p.Photos)
-                .ToListAsync();
+                .OrderBy(x => x.Id)
+                .AsNoTracking();
+            return await PagedList<Offer>.CreateAsync(query, paginationParams.PageNumber, paginationParams.PageSize);
         }
     }
 }

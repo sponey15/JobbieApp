@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.DTO;
 using API.Entities;
+using API.Helpers;
 
 namespace API.Interfaces
 {
@@ -11,9 +12,9 @@ namespace API.Interfaces
         void Delete(Offer offer);
         void Update(Offer offer);
         Task<Offer> GetOfferByIdAsync(int offerId);
-        Task<IEnumerable<Offer>> GetOffersFromCategoryAsync(OfferCategoryDto offerCategoryDto);
-        Task<IEnumerable<Offer>> GetOffersFromCompanyAsync(string companyName);
-        Task<IEnumerable<Offer>> GetCompanyOffersFromCategory(string companyName, OfferCategoryDto offerCategoryDto);
-        Task<IEnumerable<Offer>> GetOffersFromCategory(OfferCategoryDto offerCategoryDto);
+        Task<PagedList<Offer>> GetOffersFromCategoryAsync(OfferCategory offerCategory, PaginationParams paginationParams);
+        Task<PagedList<Offer>> GetOffersFromCompanyAsync(string companyName, PaginationParams paginationParams);
+        Task<PagedList<Offer>> GetCompanyOffersFromCategoryAsync(string companyName, OfferCategory offerCategory,
+            PaginationParams paginationParams);
     }
 }

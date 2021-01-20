@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using API.DTO;
 using API.Entities;
 using API.Extensions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -29,24 +30,23 @@ namespace API.Controllers
             var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
             var offer = await _unitOfWork.OfferRepository.GetOfferByIdAsync(workDto.OfferId);
 
-            if (offer == null) return BadRequest("There is no offer");
+            if (offer == null) return NotFound("There is no offer");
 
             var workToAdd = _mapper.Map<Work>(workDto);
-            //workToAdd.Offer = offer;
             workToAdd.UserId = userId;
-            workToAdd.WorkStatusName = Work.WorkStatus.Pending;
+            workToAdd.WorkStatusName = WorkStatus.Pending;
 
             _unitOfWork.WorkRepository.Add(workToAdd);
 
             if (await _unitOfWork.SaveAll())
             {
-                return Ok(workToAdd);
+                return CreatedAtRoute("works", new { workId = workToAdd.Id, offerId = offer.Id}, workToAdd);
             }
 
             return BadRequest("Saving work didn't succeed");
         }
 
-        [HttpGet("works/{workId}/{offerId}")]
+        [HttpGet("works/{workId}/{offerId}", Name = "works")]
         public async Task<ActionResult<Work>> ChoosenWork(int workId, int offerId)
         {
             var userId = User.GetUserId();
@@ -54,8 +54,8 @@ namespace API.Controllers
             var offer = await _unitOfWork.OfferRepository.GetOfferByIdAsync(offerId);
             var work = await _unitOfWork.WorkRepository.GetWorkByIdAsync(workId);
 
-            if (offer == null) return BadRequest("There is no offer with given id");
-            if (work == null) return BadRequest("There is no work with given id");
+            if (offer == null) return NotFound("There is no offer with given id");
+            if (work == null) return NotFound("There is no work with given id");
 
             return Ok(work);
         }
@@ -73,10 +73,22 @@ namespace API.Controllers
 
             if (await _unitOfWork.SaveAll())
             {
-                return Ok(workTaskToAdd);
+                return CreatedAtRoute("work-tasks", new { workTaskId = workTaskToAdd.Id, workId = work.Id}, workTaskToAdd);
             }
 
             return BadRequest("Saving work task didn't succeed");
+        }
+
+        [HttpGet("work-tasks/{workTaskId}/{workId}", Name = "work-tasks")]
+        public async Task<ActionResult<WorkTask>> GetWorkTask(int workTaskId, int workId)
+        {
+            var userId = User.GetUserId();
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
+            var workTask = await _unitOfWork.WorkRepository.GetWorkTaskByIdAsync(workTaskId);
+
+            if (workTask == null) return NotFound("There is no work with given id");
+
+            return Ok(workTask);
         }
 
         [HttpPut("work-tasks/{workTaskId}/{isComplete}")]
@@ -84,9 +96,8 @@ namespace API.Controllers
         {
             var workTask = await _unitOfWork.WorkRepository.GetWorkTaskByIdAsync(workTaskId);
 
-            if (workTask == null) return BadRequest("There is no work task with given id");
+            if (workTask == null) return NotFound("There is no work task with given id");
 
-            // var workTaskToUpdate = _mapper.Map(workTaskDto, workTask);
             workTask.IsComplete = isComplete;
 
             if (await _unitOfWork.SaveAll())
@@ -102,7 +113,7 @@ namespace API.Controllers
         {
             var work = await _unitOfWork.WorkRepository.GetWorkByIdAsync(workId);
 
-            if (work == null) return BadRequest("There is no work with given id");
+            if (work == null) return NotFound("There is no work with given id");
 
             var workToUpdate = _mapper.Map(workUpdateDto, work);
 
@@ -115,14 +126,18 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireCompanyRole")]
-        [HttpPost("company-works/status")]
-        public async Task<ActionResult<WorkTask>> GetCompanyWorksFromStatus(WorkStatusDto workStatusDto)
+        [HttpGet("company-works/status")]
+        public async Task<ActionResult<WorkTask>> GetCompanyWorksFromStatus(WorkStatus workStatus,
+            [FromQuery] PaginationParams paginationParams)
         {
             var userId = User.GetUserId();
             var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
-            var works = await _unitOfWork.WorkRepository.GetCompanyWorksFromStatusAsync(user.UserName, workStatusDto);
+            var works = await _unitOfWork.WorkRepository.GetCompanyWorksFromStatusAsync(user.UserName, workStatus, paginationParams);
 
             if (works == null) return BadRequest("There is no works");
+
+            Response.AddPaginationHeader(works.CurrentPage, works.PageSize,
+                works.TotalCount, works.TotalPages);
 
             foreach (var work in works)
             {
@@ -134,13 +149,17 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireUserRole")]
-        [HttpPost("user-works/status")]
-        public async Task<ActionResult<WorkTask>> GetUserWorksFromStatus(WorkStatusDto workStatusDto)
+        [HttpGet("user-works/status")]
+        public async Task<ActionResult<WorkTask>> GetUserWorksFromStatus(WorkStatus workStatus,
+            [FromQuery] PaginationParams paginationParams)
         {
             var userId = User.GetUserId();
-            var works = await _unitOfWork.WorkRepository.GetUserWorksFromStatusAsync(userId, workStatusDto);
+            var works = await _unitOfWork.WorkRepository.GetUserWorksFromStatusAsync(userId, workStatus, paginationParams);
 
             if (works == null) return BadRequest("There is no works");
+
+            Response.AddPaginationHeader(works.CurrentPage, works.PageSize,
+                works.TotalCount, works.TotalPages);
 
             foreach (var work in works)
             {
