@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Offer } from '../_models/offer';
+import { PaginatedResult } from '../_models/pagination';
 import { User } from '../_models/user';
 import { AccountService } from './account.service';
 
@@ -12,6 +13,7 @@ import { AccountService } from './account.service';
 export class CompanyService {
   baseUrl = environment.apiUrl;
   user: User;
+  paginatedResult: PaginatedResult<Offer[]> = new PaginatedResult<Offer[]>();
 
   constructor(private http: HttpClient, private accountService: AccountService) {
     this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
@@ -43,15 +45,54 @@ export class CompanyService {
     return this.http.get<Offer>(this.baseUrl + 'company/offers/' + offerId);
   }
 
-  getOffersFromCategory(model: any) {
-    return this.http.get(this.baseUrl + 'company/category-offers', model);
+  // getOffersFromCategory(offerCategory: any, page?: number, itemsPerPage?: number) {
+  //   let params = new HttpParams();
+
+  //   if (page !== null && itemsPerPage !== null) {
+  //     params = params.append('pageNumber', page.toString());
+  //     params = params.append('pageSize', itemsPerPage.toString());
+  //   }
+
+  //   return this.http.get(this.baseUrl + 'company/category-offers/' + offerCategory);
+  // }
+
+  getOffersFromCompany(companyName: string, page?: number, itemsPerPage?: number) {
+    let params = new HttpParams();
+
+    if (page !== null && itemsPerPage !== null) {
+      params = params.append('pageNumber', page.toString());
+      params = params.append('pageSize', itemsPerPage.toString());
+    }
+
+    return this.http.get<Offer[]>(this.baseUrl + 'company/company-offers/' + companyName,
+      {observe: 'response', params}).pipe(
+      map(response => {
+        this.paginatedResult.result = response.body;
+        if(response.headers.get('Pagination') !== null) {
+          this.paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+        }
+        return this.paginatedResult;
+      })
+    );
   }
 
-  getOffersFromCompany(companyName: string) {
-    return this.http.get(this.baseUrl + 'company/company-offers/' + companyName);
-  }
+  getCompanyOffersFromCategory(companyName: string, offerCategory: any, page?: number, itemsPerPage?: number) {
+    let params = new HttpParams();
 
-  getCompanyOffersFromCategory(companyName: string, model: any) {
-    return this.http.post(this.baseUrl + 'company/company-offers/' + companyName + '/categories', model);
+    if (page !== null && itemsPerPage !== null) {
+      params = params.append('pageNumber', page.toString());
+      params = params.append('pageSize', itemsPerPage.toString());
+    }
+
+    return this.http.get<Offer[]>(this.baseUrl + 'company/company-offers/' + companyName + '/' + offerCategory,
+      {observe: 'response', params}).pipe(
+      map(response => {
+        this.paginatedResult.result = response.body;
+        if(response.headers.get('Pagination') !== null) {
+          this.paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+        }
+        return this.paginatedResult;
+      })
+    );
   }
 }

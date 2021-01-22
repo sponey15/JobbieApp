@@ -126,7 +126,7 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireCompanyRole")]
-        [HttpGet("company-works/status")]
+        [HttpGet("company-works/status/{workStatus}")]
         public async Task<ActionResult<WorkTask>> GetCompanyWorksFromStatus(WorkStatus workStatus,
             [FromQuery] PaginationParams paginationParams)
         {
@@ -149,7 +149,7 @@ namespace API.Controllers
         }
 
         [Authorize(Policy = "RequireUserRole")]
-        [HttpGet("user-works/status")]
+        [HttpGet("user-works/status/{workStatus}")]
         public async Task<ActionResult<WorkTask>> GetUserWorksFromStatus(WorkStatus workStatus,
             [FromQuery] PaginationParams paginationParams)
         {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 import { OfferCategory } from 'src/app/_models/offer';
+import { Pagination } from 'src/app/_models/pagination';
 import { User } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
 import { CompanyService } from 'src/app/_services/company.service';
@@ -12,6 +13,9 @@ import { CompanyService } from 'src/app/_services/company.service';
 })
 export class OffersComponent implements OnInit {
   user: User;
+  pagination: Pagination;
+  pageNumber = 1;
+  pageSize = 5;
   offers: any;
   selectedCategory: string;
   options = [
@@ -39,8 +43,9 @@ export class OffersComponent implements OnInit {
   }
 
   getCompanyOffers() {
-    this.companyService.getOffersFromCompany(this.user.username).subscribe(response => {
-      this.offers = response;
+    this.companyService.getOffersFromCompany(this.user.username, this.pageNumber, this.pageSize).subscribe(response => {
+      this.offers = response.result;
+      this.pagination = response.pagination;
       console.log(this.offers);
     }, error => {
       console.log(error);
@@ -56,12 +61,24 @@ export class OffersComponent implements OnInit {
         offerCategoryName: this.selectedCategory
       };
       console.log(offerCategory);
-      this.companyService.getCompanyOffersFromCategory(this.user.username, offerCategory).subscribe(response => {
-        this.offers = response;
+      this.companyService.getCompanyOffersFromCategory(this.user.username, this.selectedCategory,
+        this.pageNumber, this.pageSize).subscribe(response => {
+        this.offers = response.result;
+        this.pagination = response.pagination;
         console.log(this.offers);
       }, error => {
         console.log(error);
       });
+    }
+  }
+
+  pageChanged(event: any) {
+    this.pageNumber = event.page;
+    if (this.selectedCategory == "All offers") {
+      this.getCompanyOffers();
+    }
+    else {
+      this.getCompanyOffersFromCategory();
     }
   }
 }

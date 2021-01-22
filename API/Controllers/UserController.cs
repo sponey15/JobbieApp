@@ -29,7 +29,7 @@ namespace API.Controllers
             _photoService = photoService;
         }
 
-        [HttpGet("category-offers")]
+        [HttpGet("category-offers/{offerCategory}")]
         public async Task<ActionResult<IEnumerable<Offer>>> OffersFromCategory(OfferCategory offerCategory,
             [FromQuery] PaginationParams paginationParams)
         {

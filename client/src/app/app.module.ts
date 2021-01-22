@@ -29,6 +29,7 @@ import { JobsComponent } from './user/jobs/jobs.component';
 import { CompanyJobsComponent } from './company/company-jobs/company-jobs.component';
 import { JobShowComponent } from './user/job-show/job-show.component';
 import { CompanyJobShowComponent } from './company/company-job-show/company-job-show.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 // import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
@@ -62,6 +63,7 @@ import { CompanyJobShowComponent } from './company/company-job-show/company-job-
     FileUploadModule,
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     })

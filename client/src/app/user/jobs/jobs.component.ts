@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Pagination } from 'src/app/_models/pagination';
 import { WorkStatus } from 'src/app/_models/work';
 import { WorkService } from 'src/app/_services/work.service';
 
@@ -9,6 +10,9 @@ import { WorkService } from 'src/app/_services/work.service';
 })
 export class JobsComponent implements OnInit {
   works: any;
+  pagination: Pagination;
+  pageNumber = 1;
+  pageSize = 5;
   selectedCategory: string;
   category: string;
   options = [
@@ -34,9 +38,15 @@ export class JobsComponent implements OnInit {
     let workStatus: WorkStatus = {
       workStatusName: this.category
     };
-    this.workService.getUserWorksFromStatus(workStatus).subscribe(works => {
-      this.works = works;
+    this.workService.getUserWorksFromStatus(this.category, this.pageNumber, this.pageSize).subscribe(works => {
+      this.works = works.result;
+      this.pagination = works.pagination;
       console.log(this.works);
     });
+  }
+
+  pageChanged(event: any) {
+    this.pageNumber = event.page;
+    this.getWorks();
   }
 }
