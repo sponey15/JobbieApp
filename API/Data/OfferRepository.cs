@@ -43,14 +43,24 @@ namespace API.Data
         }
 
         public async Task<PagedList<Offer>> GetOffersFromCategoryAsync(OfferCategory offerCategory,
-            PaginationParams paginationParams)
+            OfferParams offerParams)
         {
             var query = _context.Offers
                 .Where(x => x.OfferCategoryName == offerCategory)
                 .Include(p => p.Photos)
-                .OrderBy(x => x.Id)
-                .AsNoTracking();
-            return await PagedList<Offer>.CreateAsync(query, paginationParams.PageNumber, paginationParams.PageSize);
+                .AsQueryable();
+
+            var order = offerParams.OrderBy;
+
+            query = query.Where(x => x.Price >= offerParams.MinPrice && x.Price <= offerParams.MaxPrice);
+            query = offerParams.OrderBy switch
+            {
+                "PriceDesc" => query.OrderByDescending(x => x.Price),
+                "Price" => query.OrderBy(x => x.Price),
+                _ => query.OrderBy(x => x.Id)
+            };
+
+            return await PagedList<Offer>.CreateAsync(query.AsNoTracking(), offerParams.PageNumber, offerParams.PageSize);
         }
 
         public async Task<PagedList<Offer>> GetOffersFromCompanyAsync(string companyName, PaginationParams paginationParams)

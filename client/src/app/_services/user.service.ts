@@ -3,34 +3,45 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Offer } from '../_models/offer';
+import { OfferParams } from '../_models/offerParams';
 import { PaginatedResult } from '../_models/pagination';
+import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   baseUrl = environment.apiUrl;
-  paginatedResult: PaginatedResult<Offer[]> = new PaginatedResult<Offer[]>();
+  offerParams: OfferParams;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    this.offerParams = new OfferParams;
+  }
 
-  getOffersFromCategory(offerCategory: any, page?: number, itemsPerPage?: number) {
-    let params = new HttpParams();
+  getOfferParams() {
+    return this.offerParams;
+  }
 
-    if (page !== null && itemsPerPage !== null) {
-      params = params.append('pageNumber', page.toString());
-      params = params.append('pageSize', itemsPerPage.toString());
-    }
+  setOfferParams(params: OfferParams) {
+    this.offerParams = params;
+  }
+
+  resetOfferParams() {
+    this.offerParams = new OfferParams;
+    return this.offerParams;
+  }
+
+  getOffersFromCategory(offerCategory: any, offerParams: OfferParams) {
+    let params = getPaginationHeaders(offerParams.pageNumber, offerParams.pageSize);
+
+    params = params.append('minPrice', offerParams.minPrice.toString());
+    params = params.append('maxPrice', offerParams.maxPrice.toString());
+    params = params.append('orderBy', offerParams.orderBy.toString());
     
-    return this.http.get<Offer[]>(this.baseUrl + 'user/category-offers/' + offerCategory,
-      {observe: 'response', params}).pipe(
-      map(response => {
-        this.paginatedResult.result = response.body;
-        if(response.headers.get('Pagination') !== null) {
-          this.paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
-        }
-        return this.paginatedResult;
-      })
-    );
+    
+    return getPaginatedResult<Offer[]>(this.baseUrl + 'user/category-offers/' + offerCategory, params, this.http)
+      .pipe(map(response => {
+        return response;
+      }));
   }
 }

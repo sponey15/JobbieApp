@@ -31,9 +31,9 @@ namespace API.Controllers
 
         [HttpGet("category-offers/{offerCategory}")]
         public async Task<ActionResult<IEnumerable<Offer>>> OffersFromCategory(OfferCategory offerCategory,
-            [FromQuery] PaginationParams paginationParams)
+            [FromQuery] OfferParams offerParams)
         {
-            var offers = await _unitOfWork.OfferRepository.GetOffersFromCategoryAsync(offerCategory, paginationParams);
+            var offers = await _unitOfWork.OfferRepository.GetOffersFromCategoryAsync(offerCategory, offerParams);
 
             Response.AddPaginationHeader(offers.CurrentPage, offers.PageSize,
                 offers.TotalCount, offers.TotalPages);

@@ -45,17 +45,6 @@ export class CompanyService {
     return this.http.get<Offer>(this.baseUrl + 'company/offers/' + offerId);
   }
 
-  // getOffersFromCategory(offerCategory: any, page?: number, itemsPerPage?: number) {
-  //   let params = new HttpParams();
-
-  //   if (page !== null && itemsPerPage !== null) {
-  //     params = params.append('pageNumber', page.toString());
-  //     params = params.append('pageSize', itemsPerPage.toString());
-  //   }
-
-  //   return this.http.get(this.baseUrl + 'company/category-offers/' + offerCategory);
-  // }
-
   getOffersFromCompany(companyName: string, page?: number, itemsPerPage?: number) {
     let params = new HttpParams();
 

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OfferCategory } from 'src/app/_models/offer';
+import { OfferParams } from 'src/app/_models/offerParams';
 import { Pagination } from 'src/app/_models/pagination';
 import { UserService } from 'src/app/_services/user.service';
 
@@ -14,11 +15,15 @@ export class OffersMainComponent implements OnInit {
   offerCat: any;
   offers: any;
   pagination: Pagination;
-  pageNumber = 1;
-  pageSize = 5;
+  offerParams: OfferParams;
+  orderByList = [{ value: 'Id', display: 'Newest'},
+                 { value: 'PriceDesc', display: 'Price descending'},
+                 { value: 'Price', display: 'Price ascending'}]
 
   constructor(private userService: UserService, private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) { 
+                this.offerParams = this.userService.getOfferParams();
+              }
 
   ngOnInit(): void {
     this.getCompanyOffers();
@@ -32,7 +37,7 @@ export class OffersMainComponent implements OnInit {
 
     console.log(offerCategory);
     this.userService.getOffersFromCategory(this.route.snapshot.params.category,
-      this.pageNumber, this.pageSize).subscribe(response => {
+      this.offerParams).subscribe(response => {
       this.offers = response.result;
       this.pagination = response.pagination;
       console.log(this.offers);
@@ -40,8 +45,20 @@ export class OffersMainComponent implements OnInit {
       console.log(error);
     });
   }
+
   pageChanged(event: any) {
-    this.pageNumber = event.page;
+    this.offerParams.pageNumber = event.page;
+    this.userService.setOfferParams(this.offerParams);
+    this.getCompanyOffers();
+  }
+
+  filterOffers() {
+    this.userService.setOfferParams(this.offerParams);
+    this.getCompanyOffers();
+  }
+
+  resetFilters() {
+    this.offerParams = this.userService.resetOfferParams();
     this.getCompanyOffers();
   }
 }

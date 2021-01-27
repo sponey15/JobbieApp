@@ -52,3 +52,21 @@
 {
   background-color: #9cbbda;
 }
+
+.page-item.active .page-link {
+  background-color: #68aef5;
+  border-color: #68aef5;
+}
+
+.page-item.active .page-link {
+  background-color: #68aef5;
+  border-color: #68aef5;
+}
+
+.page-link {
+  color: #68aef5; 
+}
+
+.page-link:hover {
+  color: #68aef5; 
+}

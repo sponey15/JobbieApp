@@ -103,18 +103,6 @@ namespace API.Controllers
             return await _unitOfWork.OfferRepository.GetOfferByIdAsync(offerId);
         }
 
-        // [HttpGet("category-offers/{offerCategory}")]
-        // public async Task<ActionResult<IEnumerable<Offer>>> CategoryOffers(OfferCategory offerCategory,
-        //     [FromQuery] PaginationParams paginationParams)
-        // {
-        //     var offers = await _unitOfWork.OfferRepository.GetOffersFromCategoryAsync(offerCategory, paginationParams);
-
-        //     Response.AddPaginationHeader(offers.CurrentPage, offers.PageSize,
-        //         offers.TotalCount, offers.TotalPages);
-
-        //     return Ok(offers);
-        // }
-
         [HttpGet("company-offers/{companyName}")]
         public async Task<ActionResult<IEnumerable<Offer>>> CompanyOffers(string companyName,
             [FromQuery] PaginationParams paginationParams)

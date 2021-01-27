@@ -27,13 +27,18 @@
             <table class="table table-striped ">
                 <thead>
                     <tr>
-                        <th class="col-3">
+                        <th style="width: 40%;">
                             <div style="margin-left: 32px;">
                                 Offer Title
                             </div>
                         </th>
-                        <th class="col-3"></th>
-                        <th class="col-6"></th>
+                        <th style="width: 20%;">
+                            <div>
+                                Price
+                            </div>
+                        </th>
+                        <th style="width: 20%;"></th>
+                        <th style="width: 20%;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,6 +46,11 @@
                         <td>
                             <div style="margin-top: 32px;  margin-left: 32px;">
                                 {{offer.title}}
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-top: 32px;">
+                                {{offer.price}}
                             </div>
                         </td>
                         <td>
