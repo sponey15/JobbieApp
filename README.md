@@ -125,7 +125,7 @@ Application can be divided into two modules User and Company. User can browse of
 
 19. All offers from different companies in choosen category
 
-![1](https://raw.githubusercontent.com/sponey15/JobbieApp/master/client/src/assets/screens%20for%20readme/19.png)
+![1](https://raw.githubusercontent.com/sponey15/JobbieApp/master/client/src/assets/screens%20for%20readme/19%20update.png)
 
 20. Displayed company offer
 
