@@ -30,7 +30,9 @@ import { CompanyJobsComponent } from './company/company-jobs/company-jobs.compon
 import { JobShowComponent } from './user/job-show/job-show.component';
 import { CompanyJobShowComponent } from './company/company-job-show/company-job-show.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-// import { AgmCoreModule } from '@agm/core';
+// import {AgmCoreModule} from '@agm/core';
+// import {MatGoogleMapsAutocompleteModule} from '@angular-material-extensions/google-maps-autocomplete';
+
 
 @NgModule({
   declarations: [
@@ -71,7 +73,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyCDebS-_7-iRMKAVIf-v4t7QJCUDKUm8rc',
     //   libraries: ['places']
-    // })
+    // }),
+    // MatGoogleMapsAutocompleteModule
   ],
   providers: [
     AccountService,
