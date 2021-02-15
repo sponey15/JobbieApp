@@ -15,6 +15,7 @@ namespace API.Data
         public DbSet<Photo> Photo { get; set; }
         public DbSet<Work> Works { get; set; }
         public DbSet<WorkTask> WorkTasks { get; set; }
+        public DbSet<Message> Messages { get; set; }
         
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -43,6 +44,16 @@ namespace API.Data
                 .HasConversion(
                     v => v.ToString(),
                     v => (WorkStatus)Enum.Parse(typeof(WorkStatus), v));
+            
+            builder.Entity<Message>()
+                .HasOne(u => u.Recipient)
+                .WithMany(m => m.MessagesReceived)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Message>()
+                .HasOne(u => u.Sender)
+                .WithMany(m => m.MessagesSent)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

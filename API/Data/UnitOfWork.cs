@@ -19,6 +19,8 @@ namespace API.Data
 
         public IWorkRepository WorkRepository => new WorkRepository(_context, _mapper);
         
+        public IMessageRepository MessageRepository => new MessageRepository(_context, _mapper);
+        
         public async Task<bool> SaveAll()
         {
             return await _context.SaveChangesAsync() > 0;

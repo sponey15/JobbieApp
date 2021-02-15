@@ -7,6 +7,7 @@ namespace API.Interfaces
         IUserRepository UserRepository {get; }
         IOfferRepository OfferRepository {get; }
         IWorkRepository WorkRepository {get; }
+        IMessageRepository MessageRepository {get; }
         Task<bool> SaveAll();
     }
 }

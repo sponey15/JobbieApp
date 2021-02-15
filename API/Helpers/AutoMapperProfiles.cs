@@ -16,6 +16,8 @@ namespace API.Helpers
             CreateMap<WorkTaskDto, WorkTask>();
             CreateMap<WorkUpdateDto, Work>();
             CreateMap<WorkStatusDto, Work>();
+            CreateMap<MessageDto, Message>();
+            CreateMap<Message, MessageDto>();
         }
     }
 }
